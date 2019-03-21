@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Meditation Timer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat|PT+Serif" rel="stylesheet">
+
+</head>
+
+<body>
+    <div class="outer-container">
+        <div class="inner-container top">
+            <p class='start-p'>
+                <b>I've</b> been meditating for a while now and have begun to anticipate
+                when my timer will go off. The amount of time I meditate fits into my
+                schedule well but I wanted something to set my timer a bit more randomly
+                so that I won't know when it will go off.
+            </p>
+            <p class='start-p'>After clicking begin select how many minutes you want
+                your timer to run for. Then, optionally select one of two radio buttons.
+                Either radio button will cause your timer to run for a random amount
+                of time. One will be between 10% longer or shorter than your selected
+                time. The other will only be up to 10% longer.
+            </p>
+            <button class='begin'>Begin</button>
+        </div>
+
+        <div class="inner-container bottom">
+            <div class="time-select-container">
+                <label for="time-select">Minutes</label>
+                <input type="number" min='1' value='8' class='time-select'>
+            </div>
+
+            <div class="outer-radio-container">
+                <label class="radio-container">90% - 100%
+                    <input type="radio" name='less-or-more' class='radio-less-than'>
+                    <span class="checkmark"></span>
+                </label>
+
+                <label class="radio-container">90% - 110%
+                    <input type="radio" name='less-or-more' class='radio-less-or-more'>
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+
+            <button class='start-button'>Start Timer</button>
+            <button class='reset-button'>Reset Timer</button>
+
+            <p class="clock"></p>
+
+            <button class="stop-audio">Stop Audio</button>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+
+</html>
