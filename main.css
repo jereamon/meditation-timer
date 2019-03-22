@@ -37,7 +37,7 @@ body {
 }
 
 .inner-container.bottom {
-    display: flex;
+    display: none;
     justify-content: space-evenly;
     height: 0vh;
     max-height: 450px;
@@ -187,7 +187,6 @@ body {
 }
 
 .clock {
-    /* display: none; */
     font-size: 5rem;
     font-variant-numeric: tabular-nums;
     padding: 20px 0;

@@ -13,9 +13,8 @@ var innerContainerTop = document.querySelector('.inner-container.top'),
 
 
 begin.addEventListener('click', function () {
-    // startP.style.display = 'none';
-    // begin.style.display = 'none';
     innerContainerTop.style.display = 'none';
+    innerContainerBottom.style.display = 'flex'
     innerContainerBottom.style.visibility = 'visible'
     innerContainerBottom.style.height = '66vh';
 
