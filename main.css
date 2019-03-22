@@ -41,6 +41,7 @@ body {
     justify-content: space-evenly;
     height: 0vh;
     max-height: 450px;
+    min-height: 450px;
     transition: 1000ms;
     visibility: hidden;
 }
