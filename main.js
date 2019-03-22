@@ -28,7 +28,11 @@ begin.addEventListener('click', function () {
     clock.innerText = '8:00';
 
     function getTimerTime() {
-        if (timeSelect.value <= 0) {
+        // if (document.activeElement.classList[0] == 'time-select') {
+        //     console.log('time changed, time select active')
+        // }
+
+        if (timeSelect.value < 0) {
             timeSelect.value = 1;
         } if (!(timeSelect.value % 1 === 0)) {
             timeSelect.value = Math.floor(timeSelect.value)
@@ -90,8 +94,12 @@ begin.addEventListener('click', function () {
 
                 clock.innerText = timeLeft[0] + ':' + timeLeft[1]
 
-                if (timeLeft[0] <= 0 && timeLeft[1] <= 0) {
+                if ((timeLeft[0] <= 0 && timeLeft[1] <= 0) || timeLeft[0] < 0) {
                     clearInterval(countInterval)
+
+                    startButton.innerText = 'Start Timer'
+                    clock.innerText = '0:00';
+
                     var audioToggle = true;
                     stopAudio.style.visibility = 'visible';
                     
@@ -130,6 +138,8 @@ begin.addEventListener('click', function () {
         timerHasRun = false
         timeLeft = getTimerTime()
         clock.innerText = timeLeft[0] + ':' + timeLeft[1]
+
+        stopAudio.style.visibility = 'hidden';
     })
 
     radioLessThan.addEventListener('change', function() {
