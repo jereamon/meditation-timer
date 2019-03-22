@@ -22,7 +22,7 @@ begin.addEventListener('click', function () {
         timerHasRun = false;
     var countInterval;
     var timeLeft = getTimerTime();
-    // var timeLeft = [0, 5];
+    var timeLeft = [0, 12];
 
     clock.innerText = '8:00';
 
@@ -91,7 +91,11 @@ begin.addEventListener('click', function () {
                     timeLeft[1] -= 1;
                 }
 
-                clock.innerText = timeLeft[0] + ':' + timeLeft[1]
+                if (timeLeft[1] < 10) {
+                    clock.innerText = timeLeft[0] + ':0' + timeLeft[1]
+                } else {
+                    clock.innerText = timeLeft[0] + ':' + timeLeft[1]
+                }
 
                 if ((timeLeft[0] <= 0 && timeLeft[1] <= 0) || timeLeft[0] < 0) {
                     clearInterval(countInterval)
