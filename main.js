@@ -21,8 +21,8 @@ begin.addEventListener('click', function () {
     var timerRunning = false,
         timerHasRun = false;
     var countInterval;
-    // var timeLeft = getTimerTime(),
-    var timeLeft = [0, 5];
+    var timeLeft = getTimerTime();
+    // var timeLeft = [0, 5];
 
     clock.innerText = '8:00';
 
