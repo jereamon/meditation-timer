@@ -1,6 +1,7 @@
 $dope-purple: #d514ff;
 $light-font-color: #eee;
 $dark-font-color: #333;
+$not-as-dark-grey: #999;
 
 @mixin flex-column-centered() {
     display: flex;
@@ -163,6 +164,7 @@ body {
 }
 
 .start-button, .reset-button, .stop-audio {
+    background-color: $light-font-color;
     border-radius: 2px;
     border: none;
     color: $dark-font-color;
@@ -200,11 +202,71 @@ body {
     cursor: pointer;
 }
 
+.show-hide-timer-label {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    height: 50px;
+    user-select: none;
+    width: 130px;
+}
+
+.show-hide-timer-label input {
+    height: 0;
+    opacity: 0;
+    width: 0;
+}
+
+.slider {
+    border-radius: 34px;
+    position: absolute;
+    cursor: pointer;
+    height: 20px;
+    top: 25;
+    left: 40;
+    // right: 0;
+    bottom: 0;
+    background-color: $light-font-color;
+    transition: 400ms;
+    width: 50px;
+}
+
+.slider:before {
+    border-radius: 50%;
+    position: absolute;
+    content: '';
+    height: 14px;
+    width: 14px;
+    left: 3px;
+    bottom: 3px;
+    background-color: $dope-purple;
+    transition: 400ms;
+}
+
+input:checked + .slider {
+    background-color: $dope-purple;
+}
+
+input:checked + .slider:before {
+    background-color: $light-font-color;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px $dope-purple;
+}
+
+input:checked + .slider:before {
+    transform: translateX(29px);
+}
+
+
 .clock {
     font-size: 5rem;
     font-variant-numeric: tabular-nums;
     text-align: center;
-    transition: 1000ms;
+    transition: 500ms;
+    text-align: center;
     width: 100%;
 }
 

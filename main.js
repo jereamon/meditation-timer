@@ -9,6 +9,8 @@ var innerContainerTop = document.querySelector('.inner-container.top'),
     radioEqualTo = document.querySelector('.radio-equal-to'),
     startButton = document.querySelector('.start-button'),
     resetButton = document.querySelector('.reset-button'),
+    showHideTimer = document.querySelector('.show-hide-timer'),
+    showHideTimerText = document.querySelector('.show-hide-timer-text'),
     stopAudio = document.querySelector('.stop-audio'),
     timerEndAudio = new Audio('yak_sounds_4_edit.wav');
 
@@ -22,49 +24,13 @@ begin.addEventListener('click', function () {
     var timerRunning = false,
         timerHasRun = false;
     var countInterval;
-    // var timeLeft = getTimerTime();
     var totalTime = getTotalSeconds();
     var secondsLeft = totalTime;
     var timeLeft = formatTimeLeft(secondsLeft);
     var timePassed = 0;
     var secondsElapsed = 0;
 
-    console.log('Initalizing timeLeft. Total Seconds: ' + getTotalSeconds())
-    console.log('initializing total time. Formatted minutes & seconds: ' + formatTimeLeft(totalTime))
-    // var timeLeft = [0, 12];
-
     clock.innerText = '8:00';
-
-    function getTimerTime() {
-        if (timeSelect.value < 0) {
-            timeSelect.value = 1;
-        } if (!(timeSelect.value % 1 === 0)) {
-            timeSelect.value = Math.floor(timeSelect.value)
-        }
-
-        if (radioLessThan.checked) {
-            timeMultiplier = Math.round(100 * (Math.random() * (1 - 0.89) + 0.89)) / 100
-            totalTime = timeSelect.value * timeMultiplier
-            totalMinutes = Math.floor(totalTime)
-            totalSeconds = Math.round((totalTime - Math.floor(totalTime)) * 60)
-        } else if (radioLessOrMore.checked) {
-            timeMultiplier = Math.round(100 * (Math.random() * (1.11 - 0.89) + 0.89)) / 100
-            totalTime = timeSelect.value * timeMultiplier
-            totalMinutes = Math.floor(totalTime)
-            totalSeconds = Math.round((totalTime - Math.floor(totalTime)) * 60)
-        } else {
-            totalMinutes = timeSelect.value;
-            totalSeconds = '00';
-        }
-
-        if (totalSeconds > 0 && totalSeconds < 10) {
-            totalSeconds = '0' + totalSeconds.toString()
-        } else if (totalSeconds === 0) {
-            totalSeconds = '00';
-        }
-
-        return [totalMinutes, totalSeconds]
-    }
 
     function formatTimeLeft(seconds) {
         totalMinutes = Math.floor(seconds / 60)
@@ -100,13 +66,30 @@ begin.addEventListener('click', function () {
         return totalSeconds
     }
 
+    function setClockText() {
+        if (!showHideTimer.checked) {
+            clock.innerText = timeLeft[0] + ':' + timeLeft[1]
+            showHideTimerText.innerText = 'Hide Timer'
+            clock.style.fontSize = '5rem';
+        } else {
+            showHideTimerText.innerText = 'Show Timer'
+            clock.style.fontSize = '3rem';
+
+            if (timerRunning) {
+                clock.innerText = 'timer running'
+            } else {
+                clock.innerText = 'timer hidden'
+            }
+        }
+
+    }
+
     timeSelect.addEventListener('input', function () {
         if (!timerRunning) {
-            timeLeft = getTimerTime()
             totalTime = getTotalSeconds()
-            console.log('Time select change. Total Seconds: ' + totalTime)
-            console.log('Time select change. Formatted minutes & seconds: ' + formatTimeLeft(totalTime))
-            clock.innerText = timeLeft[0] + ':' + timeLeft[1];
+            timeLeft = formatTimeLeft(totalTime)
+
+            setClockText()
         }
     })
 
@@ -117,13 +100,12 @@ begin.addEventListener('click', function () {
             timerRunning = false
 
             clock.classList.remove('running')
+            setClockText();
         } else if (!timerRunning) {
             if (!timerHasRun) {
                 timerHasRun = true
             } else {
                 timePassed += secondsElapsed
-                // secondsLeft = totalTime - timePassed
-                console.log(timePassed)
             }
 
             startButton.innerText = 'Stop Timer'
@@ -133,14 +115,13 @@ begin.addEventListener('click', function () {
 
             countInterval = setInterval(function () {
                 var timeElapsed = Date.now() - startTime;
-                    
+
                 secondsElapsed = Math.round(timeElapsed / 1000);
 
                 secondsLeft = totalTime - (secondsElapsed + timePassed);
-            
-                timeLeft = formatTimeLeft(secondsLeft)
 
-                clock.innerText = timeLeft[0] + ':' + timeLeft[1]
+                timeLeft = formatTimeLeft(secondsLeft)
+                setClockText()
 
                 if ((timeLeft[0] <= 0 && timeLeft[1] <= 0) || timeLeft[0] < 0) {
                     clearInterval(countInterval)
@@ -184,45 +165,45 @@ begin.addEventListener('click', function () {
         }
 
         timerHasRun = false
-        timeLeft = getTimerTime()
-        totalTime = getTotalSeconds()
+        timeLeft = formatTimeLeft(totalTime)
         timePassed = 0;
 
-        console.log('Reset Button. Total Seconds: ' + totalTime)
-        console.log('Reset Button. Formatted minutes & seconds: ' + formatTimeLeft(totalTime))
-
-        clock.innerText = timeLeft[0] + ':' + timeLeft[1]
+        // clock.innerText = timeLeft[0] + ':' + timeLeft[1]
+        setClockText();
         stopAudio.style.display = 'none';
         timerEndAudio.pause();
     })
 
     radioLessThan.addEventListener('change', function () {
         if (!timerRunning && !timerHasRun) {
-            timeLeft = getTimerTime()
             totalTime = getTotalSeconds()
-            console.log('RadioLessThan Change. Total Seconds: ' + totalTime)
-            console.log('RadioLessThan Change. Formatted minutes & seconds: ' + formatTimeLeft(totalTime))
-            clock.innerText = timeLeft[0] + ':' + timeLeft[1]
+            timeLeft = formatTimeLeft(totalTime)
+            // clock.innerText = timeLeft[0] + ':' + timeLeft[1]
+            setClockText();
         }
     })
 
     radioLessOrMore.addEventListener('change', function () {
         if (!timerRunning && !timerHasRun) {
-            timeLeft = getTimerTime()
             totalTime = getTotalSeconds()
-            console.log('RadioLessOrMore Change. Total Seconds: ' + totalTime)
-            console.log('RadioLessOrMore Change. Formatted minutes & seconds: ' + formatTimeLeft(totalTime))
-            clock.innerText = timeLeft[0] + ':' + timeLeft[1]
+            timeLeft = formatTimeLeft(totalTime)
+
+            // clock.innerText = timeLeft[0] + ':' + timeLeft[1]
+            setClockText();
         }
     })
 
     radioEqualTo.addEventListener('change', function () {
         if (!timerRunning && !timerHasRun) {
-            timeLeft = getTimerTime()
             totalTime = getTotalSeconds()
-            console.log('RadioEqualTo Change. Total Seconds: ' + totalTime)
-            console.log('RadioEqualTo Change. Formatted minutes & seconds: ' + formatTimeLeft(totalTime))
-            clock.innerText = timeLeft[0] + ':' + timeLeft[1]
+            timeLeft = formatTimeLeft(totalTime)
+
+            // clock.innerText = timeLeft[0] + ':' + timeLeft[1]
+            setClockText();
         }
+    })
+
+    showHideTimer.addEventListener('change', function () {
+        setClockText()
     })
 })
