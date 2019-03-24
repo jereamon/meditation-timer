@@ -334,8 +334,8 @@ input:checked + .slider:before {
   font-size: 5rem;
   font-variant-numeric: tabular-nums;
   text-align: center;
-  -webkit-transition: 500ms;
-  transition: 500ms;
+  -webkit-transition: color 500ms;
+  transition: color 500ms;
   text-align: center;
   width: 100%;
 }
