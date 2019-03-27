@@ -24,8 +24,8 @@ begin.addEventListener('click', function () {
     var timerRunning = false,
         timerHasRun = false;
     var countInterval;
-    // var totalTime = getTotalSeconds();
-    var totalTime = 15;
+    var totalTime = getTotalSeconds();
+    // var totalTime = 15;
     var secondsLeft = totalTime;
     var timeLeft = formatTimeLeft(secondsLeft);
     var timePassed = 0;
