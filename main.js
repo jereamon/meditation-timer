@@ -12,7 +12,7 @@ var innerContainerTop = document.querySelector('.inner-container.top'),
     showHideTimer = document.querySelector('.show-hide-timer'),
     showHideTimerText = document.querySelector('.show-hide-timer-text'),
     stopAudio = document.querySelector('.stop-audio'),
-    timerEndAudio = new Audio('yak_sounds_4_edit.wav');
+    timerEndAudio = new Audio('yak_sounds_4_edit_2.wav');
 
 
 begin.addEventListener('click', function () {
@@ -24,7 +24,8 @@ begin.addEventListener('click', function () {
     var timerRunning = false,
         timerHasRun = false;
     var countInterval;
-    var totalTime = getTotalSeconds();
+    // var totalTime = getTotalSeconds();
+    var totalTime = 15;
     var secondsLeft = totalTime;
     var timeLeft = formatTimeLeft(secondsLeft);
     var timePassed = 0;
@@ -123,7 +124,11 @@ begin.addEventListener('click', function () {
                 timeLeft = formatTimeLeft(secondsLeft)
                 setClockText()
 
-                if ((timeLeft[0] <= 0 && timeLeft[1] <= 0) || timeLeft[0] < 0) {
+                if (timeLeft[0] <= 0 && timeLeft[1] <= 10) {
+                    // timerEndAudio.currentTime = 0;
+                    timerEndAudio.play();
+
+                } else if ((timeLeft[0] <= 0 && timeLeft[1] <= 0) || timeLeft[0] < 0) {
                     clearInterval(countInterval)
 
                     startButton.innerText = 'Start Timer'
@@ -131,8 +136,6 @@ begin.addEventListener('click', function () {
 
                     var audioToggle = true;
                     stopAudio.style.display = 'block';
-
-                    timerEndAudio.play();
 
                     timerEndAudio.addEventListener('ended', function () {
                         this.currentTime = 0;
@@ -149,6 +152,8 @@ begin.addEventListener('click', function () {
                         }
 
                     })
+
+                    timerRunning = false
                 }
             }, 200)
 
@@ -172,6 +177,7 @@ begin.addEventListener('click', function () {
         setClockText();
         stopAudio.style.display = 'none';
         timerEndAudio.pause();
+        timerEndAudio.currentTime = 0;
     })
 
     radioLessThan.addEventListener('change', function () {
