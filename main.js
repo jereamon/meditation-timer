@@ -30,6 +30,8 @@ begin.addEventListener('click', function () {
     var timeLeft = formatTimeLeft(secondsLeft);
     var timePassed = 0;
     var secondsElapsed = 0;
+    var stopAudioListenerBool = false;
+    var audioToggle = false;
 
     clock.innerText = '8:00';
 
@@ -67,22 +69,26 @@ begin.addEventListener('click', function () {
         return totalSeconds
     }
 
-    function setClockText() {
-        if (!showHideTimer.checked) {
-            clock.innerText = timeLeft[0] + ':' + timeLeft[1]
-            showHideTimerText.innerText = 'Hide Timer'
-            clock.style.fontSize = '5rem';
-        } else {
-            showHideTimerText.innerText = 'Show Timer'
+    function setClockText(end = false) {
+        if (end) {
             clock.style.fontSize = '3rem';
-
-            if (timerRunning) {
-                clock.innerText = 'timer running'
+            clock.innerText = 'timer ended'
+        } else {
+            if (!showHideTimer.checked) {
+                clock.innerText = timeLeft[0] + ':' + timeLeft[1]
+                showHideTimerText.innerText = 'Hide Timer'
+                clock.style.fontSize = '5rem';
             } else {
-                clock.innerText = 'timer hidden'
+                showHideTimerText.innerText = 'Show Timer'
+                clock.style.fontSize = '3rem';
+
+                if (timerRunning) {
+                    clock.innerText = 'timer running'
+                } else {
+                    clock.innerText = 'timer hidden'
+                }
             }
         }
-
     }
 
     timeSelect.addEventListener('input', function () {
@@ -102,6 +108,11 @@ begin.addEventListener('click', function () {
 
             clock.classList.remove('running')
             setClockText();
+
+            if (audioToggle) {
+                timerEndAudio.pause()
+                audioToggle = false;
+            }
         } else if (!timerRunning) {
             if (!timerHasRun) {
                 timerHasRun = true
@@ -124,17 +135,20 @@ begin.addEventListener('click', function () {
                 timeLeft = formatTimeLeft(secondsLeft)
                 setClockText()
 
-                if (timeLeft[0] <= 0 && timeLeft[1] <= 10) {
+                if (secondsLeft <= 10 && !audioToggle) {
                     // timerEndAudio.currentTime = 0;
                     timerEndAudio.play();
+                    audioToggle = true;
 
-                } else if ((timeLeft[0] <= 0 && timeLeft[1] <= 0) || timeLeft[0] < 0) {
+                } else if (secondsLeft <= 0) {
+                    console.log('timer ended')
                     clearInterval(countInterval)
 
                     startButton.innerText = 'Start Timer'
-                    clock.innerText = '0:00';
+                    // clock.innerText = '0:00';
+                    setClockText(true)
 
-                    var audioToggle = true;
+
                     stopAudio.style.display = 'block';
 
                     timerEndAudio.addEventListener('ended', function () {
@@ -142,16 +156,21 @@ begin.addEventListener('click', function () {
                         this.play();
                     }, false)
 
-                    stopAudio.addEventListener('click', function () {
-                        if (audioToggle) {
-                            timerEndAudio.pause();
-                            audioToggle = false;
-                        } else {
-                            timerEndAudio.play();
-                            audioToggle = true;
-                        }
+                    if (!stopAudioListenerBool) {
+                        stopAudioListenerBool = true;
 
-                    })
+                        stopAudio.addEventListener('click', function () {
+                            console.log('clicked stopAudio audioToggle: ' + audioToggle)
+                            if (audioToggle) {
+                                timerEndAudio.pause();
+                                audioToggle = false;
+                            } else {
+                                timerEndAudio.play();
+                                audioToggle = true;
+                            }
+
+                        })
+                    }
 
                     timerRunning = false
                 }
@@ -176,8 +195,13 @@ begin.addEventListener('click', function () {
         // clock.innerText = timeLeft[0] + ':' + timeLeft[1]
         setClockText();
         stopAudio.style.display = 'none';
-        timerEndAudio.pause();
+        if (audioToggle) {
+            timerEndAudio.pause();
+            audioToggle = false
+        }
+
         timerEndAudio.currentTime = 0;
+        console.log('audioToggle: ', audioToggle)
     })
 
     radioLessThan.addEventListener('change', function () {
