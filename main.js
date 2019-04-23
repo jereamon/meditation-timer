@@ -30,10 +30,10 @@ begin.addEventListener('click', function () {
     var timerRunning = false,
         timerHasRun = false;
     var countInterval;
-    // var totalTime = getTotalSeconds();
+    var totalTime = getTotalSeconds();
 
     // This totalTime setting is for testing
-    var totalTime = 15;
+    // var totalTime = 15;
 
     // I think I have some redundancy here with totalTime and secondsLeft.
     var secondsLeft = totalTime;
