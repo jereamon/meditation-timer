@@ -164,7 +164,7 @@ begin.addEventListener('click', function () {
                 if (secondsLeft <= 10 && !audioToggle && !stopAudioListenerBool) {
                     checkTimeLeft()
                 }
-            }, 1000)
+            }, 200)
 
             timerRunning = true
         }
