@@ -6,5 +6,5 @@ each day but without knowing when my timer would end.
 This simple single page application uses vanilla javascript for all of its functionality.
 
 <p align="center">
-<img src="https://github.com/jereamon/meditation-timer/blob/master/meditation-timer.jpg" alt="Screenshot of the meditation timer interface" width="200">
+<img src="https://github.com/jereamon/meditation-timer/blob/master/meditation-timer.jpg" alt="Screenshot of the meditation timer interface" width="75%">
 </p>
