@@ -16,10 +16,11 @@
         <div class="inner-container top">
             <p class='start-p'>
                 <b>I've</b> been meditating for a while now and have begun to anticipate
-                when my timer will go off. This allows me to set my timer randomly but
-		within a range so I'm unable to predict its end.
+                when my timer will go off. The amount of time I meditate fits into my
+                schedule well but I wanted something to set my timer a bit more randomly
+                ensuring that I'll be unable to predict its end.
             </p>
-	    <p class='start-p'><b>Directions:</b> After clicking begin select how many minutes you want
+            <p class='start-p'>After clicking begin select how many minutes you want
                 your timer to run for. Then, optionally select one of two radio buttons.
                 Either radio button will cause your timer to run for a random amount
                 of time. One will be between 90% and 110% of your selected
